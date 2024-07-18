@@ -1,4 +1,138 @@
-.App {
-  text-align: center;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
+#root {
+  background: #F8F9FA;
+}
+
+.App {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: rgb(31, 41, 57);
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.33;
+  letter-spacing: 0px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.icon-cold,
+.icon-hot,
+.icon-fire,
+.icon-lightning {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+
+.icon-cold {
+  background-image: url('./assets/icons/icon-cold.svg');
+}
+
+.icon-hot {
+  background-image: url('./assets/icons/icon-hot.svg');
+}
+
+.icon-fire {
+  background-image: url('./assets/icons/icon-fire.svg');
+}
+
+.icon-lightning {
+  background-image: url('./assets/icons/icon-lightning.svg');
+}
+
+table {
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: rgb(240, 243, 247);
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0 6px; 
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background: rgb(240, 243, 247);
+  z-index: 1;
+  border-radius: 12px 12px 0 0;
+}
+
+thead tr th {
+  color: rgb(105, 113, 128);
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.23;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid rgb(224, 229, 235);
+}
+
+tbody {
+  background: rgb(255, 255, 255);
+}
+
+tbody tr {
+  transition: background-color 0.3s;
+  border-bottom: 1px solid rgb(224, 229, 235);
+}
+
+tbody tr:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+tbody tr td {
+  color: rgb(31, 41, 57);
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 0.7;
+  text-align: left;
+  padding: 12px;
+  position: relative;
+}
+
+.delete-button {
+  display: none;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: red;
+  font-size: 14px;
+  cursor: pointer;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 12px 10px 12px;
+  background: rgb(254, 227, 227);
+  border-radius: 6px;
+}
+
+.delete-button:hover {
+  background: rgb(254, 215, 215);
+}
+
+.delete-button:active {
+  background: rgb(242, 245, 248);
+}
+
+tbody tr:hover .delete-button {
+  display: inline-block;
+}

@@ -24,7 +24,7 @@ function App() {
   console.log(data);
 
   useEffect(() => {
-    fetch(`http://showroom.eis24.me/api/v4/test/meters/?limit=20&offset=20`)
+    fetch(`http://showroom.eis24.me/api/v4/test/meters/?limit=100&offset=100`)
       .then((res) => res.json())
       .then((arr) => {
         setData(arr.results);
@@ -63,6 +63,13 @@ function App() {
             <tr key={meter.id}>
               <td>{index + 1}</td>
               <td>
+                <span
+                  className={
+                    meter._type.includes('ColdWaterAreaMeter')
+                      ? 'icon-cold'
+                      : 'icon-hot'
+                  }
+                />
                 {meter._type.includes('ColdWaterAreaMeter') ? 'ХВС' : 'ГВС'}
               </td>
               <td>{new Date(meter.installation_date).toLocaleDateString()}</td>
@@ -71,7 +78,26 @@ function App() {
               <td>{meter.area.id}</td>
               <td>{meter.description}</td>
               <td>
-                <button onClick={() => onDelete(meter.id)}>Удалить</button>
+                <button
+                  className="delete-button"
+                  onClick={() => onDelete(meter.id)}
+                >
+                  <svg
+                    width="20.000000"
+                    height="22.000000"
+                    viewBox="0 0 20 22"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      id="Icon"
+                      d="M14.72 0L5.27 0L4.27 3L0 3L0 5L2 5L3 22L17 22L18 5L20 5L20 3L15.72 3L14.72 0ZM13.61 3L6.38 3L6.72 2L13.27 2L13.61 3ZM5 20L4 5L16 5L15 20L5 20ZM9 8L9 17L7 17L7 8L9 8ZM13 8L13 17L11 17L11 8L13 8Z"
+                      fill="#697180"
+                      fill-opacity="1.000000"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </button>
               </td>
             </tr>
           ))}
