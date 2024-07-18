@@ -190,3 +190,12 @@ tfoot{
 .page-button:hover {
   background: rgb(206, 213, 222);
 }
+
+.table-loading{
+  font-size: 24px;
+  height: 80vh;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
