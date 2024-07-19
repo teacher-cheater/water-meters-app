@@ -6,7 +6,6 @@
 
 #root {
   background: #F8F9FA;
-  /* background: teal; */
 }
 
 .App {
@@ -24,7 +23,7 @@ header {
 
 h1 {
   color: rgb(31, 41, 57);
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-size: 24px;
   font-weight: 500;
   line-height: 1.33;
@@ -82,19 +81,16 @@ thead {
   top: 0;
   background: rgb(240, 243, 247);
   z-index: 1;
-  /* border-radius: 12px 12px 0 0; */
 }
 
 thead tr th {
   color: rgb(105, 113, 128);
-  font-family: 'Roboto', sans-serif;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.23;
   text-align: left;
   padding: 12px;
   border-bottom: 1px solid rgb(224, 229, 235);
-  /* border-radius: 12px 12px 0 0; */
 }
 
 tbody {

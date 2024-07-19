@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react-lite';
 import './App.css';
+import './index.css';
 import MeterStore from './models/MeterStore';
 import Table from './components/Table';
-import Pagination from './components/Pagination';
 import LoadingIndicator from './components/LoadingIndicator';
 
 const App = observer(() => {
@@ -37,19 +37,14 @@ const App = observer(() => {
       {store.loading ? (
         <LoadingIndicator />
       ) : (
-        <>
-          <Table
-            data={store.data}
-            currentPage={store.currentPage}
-            itemsPerPage={store.itemsPerPage}
-            onDeleteMeter={store.deleteMeter}
-          />
-          <Pagination
-            currentPage={store.currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </>
+        <Table
+          data={store.data}
+          currentPage={store.currentPage}
+          itemsPerPage={store.itemsPerPage}
+          onDeleteMeter={store.deleteMeter}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   );
