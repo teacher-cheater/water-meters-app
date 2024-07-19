@@ -1,77 +1,36 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios'; 
+import { useEffect } from 'react';
+import { observer, useLocalStore } from 'mobx-react-lite';
 import './App.css';
+import { MeterStore } from './models/MeterModel';
 
-interface Area {
-  id: string;
-}
-
-interface Meter {
-  area: Area;
-  brand_name: string | null;
-  communication: string;
-  description: string;
-  id: string;
-  initial_values: number[];
-  installation_date: string;
-  is_automatic: boolean | null;
-  model_name: string | null;
-  serial_number: string;
-  _type: string[];
-}
-
-function App() {
-  const [data, setData] = useState<Meter[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const itemsPerPage = 20;
-  const totalItems = 200; 
+// Определяем тип возвращаемого объекта
+const App = observer(() => {
+  const store = useLocalStore(() =>
+    MeterStore.create({
+      data: [],
+      currentPage: 1,
+      loading: true,
+      itemsPerPage: 20,
+      totalItems: 200,
+    })
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `http://showroom.eis24.me/api/v4/test/meters/`,
-          {
-            params: {
-              limit: itemsPerPage,
-              offset: (currentPage - 1) * itemsPerPage,
-            },
-          }
-        );
-        setData(response.data.results);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    store.fetchData();
+  }, [store, store.currentPage]);
 
-    fetchData();
-  }, [currentPage]);
-
-  const onDelete = async (id: string) => {
-    try {
-      await axios.delete(`http://showroom.eis24.me/api/v4/test/meters/${id}/`);
-      setData((prevData) => prevData.filter((meter) => meter.id !== id));
-    } catch (error) {
-      console.error('Error deleting meter:', error);
-    }
-  };
-
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const totalPages = Math.ceil(store.totalItems / store.itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {
-      setCurrentPage(page);
+      store.setCurrentPage(page);
     }
   };
 
   const paginationRange = () => {
     const range = [];
-    const startPage = Math.max(1, currentPage - 2);
-    const endPage = Math.min(totalPages, currentPage + 2);
+    const startPage = Math.max(1, store.currentPage - 2);
+    const endPage = Math.min(totalPages, store.currentPage + 2);
 
     if (startPage > 1) {
       range.push(1);
@@ -95,7 +54,7 @@ function App() {
       <header>
         <h1>Список счетчиков</h1>
       </header>
-      {loading ? (
+      {store.loading ? (
         <p className="table-loading">Идёт загрузка...</p>
       ) : (
         <div className="table-container">
@@ -113,10 +72,10 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {data.map((meter, index) => (
+              {store.data.map((meter, index) => (
                 <tr key={meter.id}>
                   <td className="sequence-number">
-                    {(currentPage - 1) * itemsPerPage + index + 1}
+                    {(store.currentPage - 1) * store.itemsPerPage + index + 1}
                   </td>
                   <td>
                     <span
@@ -138,7 +97,7 @@ function App() {
                   <td>
                     <button
                       className="delete-button"
-                      onClick={() => onDelete(meter.id)}
+                      onClick={() => store.deleteMeter(meter.id)}
                     >
                       <svg
                         width="20.000000"
@@ -168,7 +127,7 @@ function App() {
                       <button
                         key={index}
                         className={`page-button ${
-                          page === currentPage ? 'active' : ''
+                          page === store.currentPage ? 'active' : ''
                         }`}
                         onClick={() =>
                           typeof page === 'number' && handlePageChange(page)
@@ -187,6 +146,6 @@ function App() {
       )}
     </div>
   );
-}
+});
 
 export default App;
